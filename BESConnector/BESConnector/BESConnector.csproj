@@ -167,7 +167,6 @@
   <ItemGroup>
     <Content Include="apiapp.json" />
     <None Include="Properties\PublishProfiles\BESConnector%28default-web-northcentralus%29 %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\BESConnector%28default-web-northcentralus%29 %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\BESConnector%28Default-Web-NorthCentralUS%29.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

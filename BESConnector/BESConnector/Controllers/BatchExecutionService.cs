@@ -24,11 +24,22 @@ namespace BESConnector.Controllers
 
             // set a time out for polling status
             const int TimeOutInMilliseconds = 120 * 10000; // Set a timeout of 20 minutes
+            BatchScoreStatus status = new BatchScoreStatus();
             string BaseUrl = besobj.GetAPIURL();
+
+            string strApiVersion = besobj.GetApiVersion();
+            if(!strApiVersion.Contains("api-version=2.0"))
+            {
+                status.StatusCode = 0;
+                status.Details = "Invalid API version. Please check your Post URL is from version 2.0 of the API help page.";
+                status.SetAdditionInformation();
+                return status;
+            }
+
             BaseUrl = BaseUrl.Substring(0, BaseUrl.LastIndexOf("/jobs") + 5);   // Correct BaseUrl don't have api-version
             string apiKey = besobj.GetAPIKey();
 
-            BatchScoreStatus status = new BatchScoreStatus();
+            
             using (HttpClient client = new HttpClient())
             {
                 var request = new BatchExecutionRequest()
@@ -44,11 +55,11 @@ namespace BESConnector.Controllers
                 //Submitting the job...
 
                 // submit the job
-                var response = await client.PostAsJsonAsync(BaseUrl + "?api-version=2.0", request);
+                var response = await client.PostAsJsonAsync(BaseUrl + "?" + strApiVersion, request);
                 if (!response.IsSuccessStatusCode)
                 {
                     status.StatusCode = 0;
-                    status.Details = response.ReasonPhrase + ". Job submitting gets Error. Please check input.";
+                    status.Details = response.ReasonPhrase + ". Job submission encountered error. Please check input.";
                     status.SetAdditionInformation();
                     return status;
                 }
@@ -59,16 +70,16 @@ namespace BESConnector.Controllers
 
                 // start the job
                 //Starting the job...
-                response = await client.PostAsync(BaseUrl + "/" + jobId + "/start?api-version=2.0", null);
+                response = await client.PostAsync(BaseUrl + "/" + jobId + "/start?" + strApiVersion, null);
                 if (!response.IsSuccessStatusCode)
                 {
                     status.StatusCode = 0;
-                    status.Details = response.ReasonPhrase + ". Cannot get status of jobId " + jobId;
+                    status.Details = response.ReasonPhrase + ". Cannot get status of Job Id " + jobId;
                     status.SetAdditionInformation();
                     return null;
                 }
 
-                string jobLocation = BaseUrl + "/" + jobId + "?api-version=2.0";
+                string jobLocation = BaseUrl + "/" + jobId + "?" + strApiVersion;
                 Stopwatch watch = Stopwatch.StartNew();
                 bool done = false;                
                 while (!done)

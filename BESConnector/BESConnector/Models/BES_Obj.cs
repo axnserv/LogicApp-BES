@@ -26,6 +26,13 @@ namespace BESConnector.Models
             return API_URL;
         }
 
+        public string GetApiVersion()
+        {
+            if (API_URL.IndexOf("api-version") == -1)
+                return "";
+            return API_URL.Substring(API_URL.IndexOf("api-version"));
+        }
+
         public string GetAPIKey()
         {
             return API_Key;
