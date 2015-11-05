@@ -7,6 +7,8 @@ using Swashbuckle.Swagger;
 using WebActivatorEx;
 using BESConnector;
 using TRex.Metadata;
+using System;
+using System.Collections.Generic;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -37,7 +39,7 @@ namespace BESConnector
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "Azure ML BES Connector");
+                        c.SingleApiVersion("v1", "Azure ML Connector");
                         c.ReleaseTheTRex(); /* <-- This line does all of the magic */
                         // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                         // In this case, you must provide a lambda that tells Swashbuckle which actions should be
@@ -150,6 +152,7 @@ namespace BESConnector
                         // when there are multiple operations with the same verb in the API.
                         //
                         c.OperationFilter<IncludeParameterNamesInOperationIdFilter>();
+                        c.OperationFilter<AddDefaultValues>();
 
                         // Post-modify the entire Swagger document by wiring up one or more Document filters.
                         // This gives full control to modify the final SwaggerDocument. You should have a good understanding of
@@ -246,6 +249,64 @@ namespace BESConnector
                     "{0}By{1}",
                     operation.operationId,
                     string.Join("And", parameters));
+            }
+        }
+    }
+
+    public class SwaggerDefaultValue : Attribute
+    {
+        public string ParameterName { get; set; }
+        public string Values { get; set; }
+        public string DefaultValue { get; set; }
+
+        public SwaggerDefaultValue(string parameterName, string defaultValue = "", string values = "")
+        {
+            this.ParameterName = parameterName;
+            this.Values = values;
+            this.DefaultValue = defaultValue;
+        }
+    }
+
+    public class AddDefaultValues : IOperationFilter
+    {
+        public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
+        {
+            List<SwaggerDefaultValue> listDefine = new List<SwaggerDefaultValue>
+            {
+                new SwaggerDefaultValue("Compare", "<", "<,<=,>,>=,="),
+                //new SwaggerDefaultValue("Model_URI", "@{body(\'besconnector').Results.output2.FullURL}"),
+                //new SwaggerDefaultValue("Evaluate_Output_Path", "@{body(\'besconnector\').Results.output1.FullURL}")
+            };
+
+            if (operation.parameters == null)
+                return;
+            foreach (var param in operation.parameters)
+            {
+                var actionParam = apiDescription.ActionDescriptor.GetParameters().First(p => p.ParameterName == param.name);
+
+                foreach (SwaggerDefaultValue customAttribute in listDefine)
+                {
+                    if (customAttribute.ParameterName == param.name)
+                    {
+                        param.@default = customAttribute.DefaultValue;
+                        string[] listValue = customAttribute.Values.Split(',');
+                        if (listValue != null && listValue.Length > 1)
+                            param.@enum = listValue;
+                    }
+                }
+
+
+                //if (actionParam != null)
+                //{
+                //    var customAttribute = actionParam.ActionDescriptor.GetCustomAttributes<SwaggerDefaultValue>().FirstOrDefault(p => p.ParameterName == param.name);
+                //    if (customAttribute != null)
+                //    {
+                //        param.@default = customAttribute.DefaultValue;
+                //        string[] listValue = customAttribute.Values.Split(',');
+                //        if (listValue != null && listValue.Length > 1)
+                //            param.@enum = listValue;
+                //    }
+                //}
             }
         }
     }

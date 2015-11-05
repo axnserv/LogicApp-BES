@@ -18,12 +18,12 @@ namespace BESConnector.Controllers
     public class BES1_FullController : ApiController
     {
 
-        [Metadata("With Input and Output", "Experiment has web service input and output modules")]
+        [Metadata("Batch Job With Input and Output", "Experiment has web service input and output modules")]
+        [Swashbuckle.Swagger.Annotations.SwaggerResponse(HttpStatusCode.OK, "Finish", typeof(BatchScoreStatus))]
+        [Swashbuckle.Swagger.Annotations.SwaggerResponseRemoveDefaults]
         [HttpPost, Route("api/Full")]
-        //public async Task<BatchScoreStatus> Put([FromBody]
-        //                                [Metadata("Input Blob Info", "Input Blob and Global Parameters Keys")]
-        //                                    BES_Full Obj)
-        public async Task<BatchScoreStatus> Post(
+        
+        public async Task<HttpResponseMessage> Post(
              [Metadata("API POST URL", "Web Service Request URI")] string _API_URL,
              [Metadata("API Key", "Web Service API Key")] string _API_Key,
              [Metadata("Storage Account Name (Input)", "Azure Storage Account Name")] string _Input_AccountName,
@@ -65,7 +65,12 @@ namespace BESConnector.Controllers
                 Obj.Output_Blob = "output_" + Obj.Input_Blob;
 
             BatchScoreStatus result = await BatchExecutionService.InvokeBatchExecutionService(Obj);
-            return result;
+
+            HttpResponseMessage response = Request.CreateResponse<BatchScoreStatus>(HttpStatusCode.Accepted, result);
+            response.Headers.Location = new Uri(string.Format("https://" + Request.RequestUri.Authority + "/api/CheckStatus?url={0}&api={1}", WebUtility.UrlEncode(result.JobLocation), WebUtility.UrlEncode(_API_Key)));
+            response.Headers.Add("Retry-after", "30");
+
+            return response;
         }
     }
 }

@@ -12,9 +12,10 @@ namespace BESConnector.Controllers
 {
     public class BES2_NoneController : ApiController
     {
-        [Metadata("No Input and Output", "Experiment does not have web serivce input or output module (e.g. uses a Reader and Writer module")]
+        [Metadata("Batch Job No Input and Output", "Experiment does not have web service input or output module (e.g. uses a Reader and Writer module")]
+        [Swashbuckle.Swagger.Annotations.SwaggerResponseRemoveDefaults]
         [HttpPost, Route("api/None")]
-        public async Task<BatchScoreStatus> Post(
+        public async Task<HttpResponseMessage> Post(
              [Metadata("API POST URL", "Web Service Request URI")] string _API_URL,
              [Metadata("API Key", "Web Service API Key")] string _API_Key,             
              [Metadata(FriendlyName = "Global Parameters Keys", Description = "Comma separated list of parameters", Visibility = VisibilityType.Advanced)] string _GlobalKeys = "",
@@ -31,7 +32,10 @@ namespace BESConnector.Controllers
             };
 
             BatchScoreStatus result = await BatchExecutionService.InvokeBatchExecutionService(Obj);
-            return result;
+            HttpResponseMessage response = Request.CreateResponse<BatchScoreStatus>(HttpStatusCode.Accepted, result);
+            response.Headers.Location = new Uri(string.Format("https://" + Request.RequestUri.Authority + "/api/CheckStatus?url={0}&api={1}", WebUtility.UrlEncode(result.JobLocation), WebUtility.UrlEncode(_API_Key)));
+            response.Headers.Add("Retry-after", "30");
+            return response;
         }
     }
 }

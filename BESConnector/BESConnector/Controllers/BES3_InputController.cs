@@ -12,9 +12,10 @@ namespace BESConnector.Controllers
 {
     public class BES3_InputController : ApiController
     {
-        [Metadata("With only Input", "Experiment has a web serivce input module, but no web service output module (e.g. uses a Writer module")]
+        [Metadata("Batch Job With only Input", "Experiment has a web service input module, but no web service output module (e.g. uses a Writer module")]
+        [Swashbuckle.Swagger.Annotations.SwaggerResponseRemoveDefaults]
         [HttpPost, Route("api/OnlyInput")]
-        public async Task<BatchScoreStatus> Post(
+        public async Task<HttpResponseMessage> Post(
              [Metadata("API POST URL", "Web Service Request URI")] string _API_URL,
              [Metadata("API Key", "Web Service API Key")] string _API_Key,
              [Metadata("Storage Account Name (Input)", "Azure Storage Account Name")] string _Input_AccountName,
@@ -41,7 +42,10 @@ namespace BESConnector.Controllers
             };
 
             BatchScoreStatus result = await BatchExecutionService.InvokeBatchExecutionService(Obj);
-            return result;
+            HttpResponseMessage response = Request.CreateResponse<BatchScoreStatus>(HttpStatusCode.Accepted, result);
+            response.Headers.Location = new Uri(string.Format("https://" + Request.RequestUri.Authority + "/api/CheckStatus?url={0}&api={1}", WebUtility.UrlEncode(result.JobLocation), WebUtility.UrlEncode(_API_Key)));
+            response.Headers.Add("Retry-after", "30");
+            return response;
         }
 
     }

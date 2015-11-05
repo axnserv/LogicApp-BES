@@ -23,7 +23,7 @@ namespace BESConnector.Controllers
             
 
             // set a time out for polling status
-            const int TimeOutInMilliseconds = 120 * 10000; // Set a timeout of 20 minutes
+            //const int TimeOutInMilliseconds = 120 * 10000; // Set a timeout of 20 minutes
             BatchScoreStatus status = new BatchScoreStatus();
             string BaseUrl = besobj.GetAPIURL();
 
@@ -67,62 +67,69 @@ namespace BESConnector.Controllers
                 string jobId = await response.Content.ReadAsAsync<string>();
                 Console.WriteLine(string.Format("Job ID: {0}", jobId));
 
+                response = await client.PostAsync(BaseUrl + "/" + jobId + "/start?" + strApiVersion, null);
+
+                string jobLocation = BaseUrl + "/" + jobId + "?" + strApiVersion;
+                status.JobLocation = jobLocation;
+                return status;
+
 
                 // start the job
                 //Starting the job...
-                response = await client.PostAsync(BaseUrl + "/" + jobId + "/start?" + strApiVersion, null);
-                if (!response.IsSuccessStatusCode)
-                {
-                    status.StatusCode = 0;
-                    status.Details = response.ReasonPhrase + ". Cannot get status of Job Id " + jobId;
-                    status.SetAdditionInformation();
-                    return null;
-                }
+                //response = await client.PostAsync(BaseUrl + "/" + jobId + "/start?" + strApiVersion, null);
+                //if (!response.IsSuccessStatusCode)
+                //{
+                //    status.StatusCode = 0;
+                //    status.Details = response.ReasonPhrase + ". Cannot get status of Job Id " + jobId;
+                //    status.SetAdditionInformation();
+                //    return null;
+                //}
 
-                string jobLocation = BaseUrl + "/" + jobId + "?" + strApiVersion;
-                Stopwatch watch = Stopwatch.StartNew();
-                bool done = false;                
-                while (!done)
-                {
-                    //Checking the job status...
-                    response = await client.GetAsync(jobLocation);
-                    if (!response.IsSuccessStatusCode)
-                    {   
+                //string jobLocation = BaseUrl + "/" + jobId + "?" + strApiVersion;
+                //Stopwatch watch = Stopwatch.StartNew();
+                //bool done = false;                
+                //while (!done)
+
+                //{
+                //    //Checking the job status...
+                //    response = await client.GetAsync(jobLocation);
+                //    if (!response.IsSuccessStatusCode)
+                //    {   
                         
-                        return null;
-                    }
+                //        return null;
+                //    }
 
-                    status = await response.Content.ReadAsAsync<BatchScoreStatus>();
-                    if (watch.ElapsedMilliseconds > TimeOutInMilliseconds)
-                    {
-                        done = true;
-                        await client.DeleteAsync(jobLocation);
-                    }
-                    switch (status.StatusCode)
-                    {
-                        case BatchScoreStatusCode.NotStarted:
-                            break;
-                        case BatchScoreStatusCode.Running:
-                            break;
-                        case BatchScoreStatusCode.Failed:
-                            done = true;
-                            break;
-                        case BatchScoreStatusCode.Cancelled:
-                            done = true;
-                            break;
-                        case BatchScoreStatusCode.Finished:
-                            done = true;
-                            break;
-                    }
+                //    status = await response.Content.ReadAsAsync<BatchScoreStatus>();
+                //    if (watch.ElapsedMilliseconds > TimeOutInMilliseconds)
+                //    {
+                //        done = true;
+                //        await client.DeleteAsync(jobLocation);
+                //    }
+                //    switch (status.StatusCode)
+                //    {
+                //        case BatchScoreStatusCode.NotStarted:
+                //            break;
+                //        case BatchScoreStatusCode.Running:
+                //            break;
+                //        case BatchScoreStatusCode.Failed:
+                //            done = true;
+                //            break;
+                //        case BatchScoreStatusCode.Cancelled:
+                //            done = true;
+                //            break;
+                //        case BatchScoreStatusCode.Finished:
+                //            done = true;
+                //            break;
+                //    }
 
-                    if (!done)
-                    {
-                        Thread.Sleep(1000); // Wait one second
-                    }
-                }
+                //    if (!done)
+                //    {
+                //        Thread.Sleep(1000); // Wait one second
+                //    }
+                //}
 
-                status.SetAdditionInformation();
-                return status;
+                //status.SetAdditionInformation();
+                //return status;
             }
 
         }
@@ -184,6 +191,9 @@ namespace BESConnector.Controllers
         [Metadata("Error Details", "If the job's status is Failed, details will be showed here.")]
         // Error details, if any
         public string Details { get; set; }
+
+        [Metadata(FriendlyName = "Job Location", Description = "Use this link to get status of Job", Visibility = VisibilityType.Internal)]
+        public string JobLocation { get; set; }
 
         /// <summary>
         /// Set two more Informations
