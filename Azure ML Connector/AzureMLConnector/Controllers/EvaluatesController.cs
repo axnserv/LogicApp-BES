@@ -164,6 +164,7 @@ namespace AzureMLConnector.Controllers
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+                client.DefaultRequestHeaders.Add("x-ms-source-id", "Azure ML Logic App Patch for Retraining");
 
                 using (var request = new HttpRequestMessage(new HttpMethod("PATCH"), endpointUrl))
                 {

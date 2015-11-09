@@ -50,7 +50,8 @@ namespace AzureMLConnector.Controllers
                 };
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
-
+                // Add resource ID
+                client.DefaultRequestHeaders.Add("x-ms-source-id", "Azure ML Logic App for BES");
 
                 //Submitting the job...
 
