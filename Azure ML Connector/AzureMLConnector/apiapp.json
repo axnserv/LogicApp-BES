@@ -1,12 +1,20 @@
 ﻿{
     "$schema": "http://json-schema.org/schemas/2014-11-01/apiapp.json#",
-    "id": "AzureML BES Connector",
+    "id": "AzureML.LogicApp.Connector",
     "namespace": "microsoft.com",
     "gateway": "2015-01-14",
     "version": "1.0.0",
-    "title": "AzureML BES Connector",
+    "title": "Azure ML Connector",
     "summary": "",
-    "author": "Azure Machine Learning",
+    "description": "The Azure ML Connector for Logic Apps enables calling Azure ML APIs for batch scoring (Batch Execution Service) and retraining",
+    "author": "Azure ML Team",
+    "iconUrl": "http://bammobi.com/MLIcon.png",
+    "releaseNotes": "Create Package",
+    "licenseUrl": "https://www.microsoft.com/en-us/licensing/default.aspx",
+    "projectUrl": "http://apiapps-preview.nuget.org/packages/AzureML.LogicApp.Connector",
+    "requireLicenseAcceptance": "false",
+    "tags": "AzureML BES Retraining LogicApps",
+    "copyright":  "Copyright 2015",
     "endpoints": {
         "apiDefinition": "/swagger/docs/v1",
         "status": null
