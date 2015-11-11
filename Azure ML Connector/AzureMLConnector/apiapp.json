@@ -3,7 +3,7 @@
     "id": "AzureML.LogicApp.Connector",
     "namespace": "microsoft.com",
     "gateway": "2015-01-14",
-    "version": "1.0.0",
+    "version": "1.0.0.1",
     "title": "Azure ML Connector",
     "summary": "",
     "description": "The Azure ML Connector for Logic Apps enables calling Azure ML APIs for batch scoring (Batch Execution Service) and retraining",
