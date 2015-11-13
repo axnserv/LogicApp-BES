@@ -176,9 +176,9 @@ namespace AzureMLConnector
                         //c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
                         // ***** Uncomment the following to enable the swagger UI *****
                         
-                            })
-                        .EnableSwaggerUi(c =>
-                            {
+                        //    })
+                        //.EnableSwaggerUi(c =>
+                        //    {
                         
                         // Use the "InjectStylesheet" option to enrich the UI with one or more additional CSS stylesheets.
                         // The file must be included in your project as an "Embedded Resource", and then the resource's
@@ -226,12 +226,12 @@ namespace AzureMLConnector
                     });
         }
 
-        private static string GetXmlCommentsPath()
-        {
-            //throw new System.NotImplementedException();
-            //BESConnector.xml
-            return System.String.Format(CultureInfo.InvariantCulture, @"{0}\bin\BESConnector.xml", System.AppDomain.CurrentDomain.BaseDirectory);
-        }
+        //private static string GetXmlCommentsPath()
+        //{
+        //    //throw new System.NotImplementedException();
+        //    //BESConnector.xml
+        //    return System.String.Format(CultureInfo.InvariantCulture, @"{0}\bin\BESConnector.xml", System.AppDomain.CurrentDomain.BaseDirectory);
+        //}
     }
 
     internal class IncludeParameterNamesInOperationIdFilter : IOperationFilter
@@ -294,19 +294,6 @@ namespace AzureMLConnector
                             param.@enum = listValue;
                     }
                 }
-
-
-                //if (actionParam != null)
-                //{
-                //    var customAttribute = actionParam.ActionDescriptor.GetCustomAttributes<SwaggerDefaultValue>().FirstOrDefault(p => p.ParameterName == param.name);
-                //    if (customAttribute != null)
-                //    {
-                //        param.@default = customAttribute.DefaultValue;
-                //        string[] listValue = customAttribute.Values.Split(',');
-                //        if (listValue != null && listValue.Length > 1)
-                //            param.@enum = listValue;
-                //    }
-                //}
             }
         }
     }

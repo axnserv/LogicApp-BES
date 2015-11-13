@@ -2,13 +2,11 @@
 using Microsoft.WindowsAzure.Storage;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
+
 using TRex.Metadata;
 
 namespace AzureMLConnector.Controllers
