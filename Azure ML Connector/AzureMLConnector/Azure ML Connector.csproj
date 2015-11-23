@@ -140,6 +140,8 @@
     <None Include="Properties\PublishProfiles\BESConnector%28default-web-northcentralus%29 %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\BESConnector%28default-web-northcentralus%29 %288%29.pubxml" />
     <None Include="Properties\PublishProfiles\BESConnector%28Default-Web-NorthCentralUS%29.pubxml" />
+    <None Include="Properties\PublishProfiles\Folder.pubxml" />
+    <None Include="Properties\PublishProfiles\Folder2.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -163,7 +165,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>41481</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:41422/</IISUrl>
+          <IISUrl>http://localhost:41423/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

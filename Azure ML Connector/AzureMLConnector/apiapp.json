@@ -1,25 +1,9 @@
 ﻿{
     "$schema": "http://json-schema.org/schemas/2014-11-01/apiapp.json#",
-    "id": "AzureML.LogicApp.Connector",
+    "id": "AzureMLLogicAppConnector",
     "namespace": "microsoft.com",
     "gateway": "2015-01-14",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "version": "1.0.1",
-=======
-    "version": "1.0.0.1",
->>>>>>> parent of 3d9f561... Edit apiapp.json
-=======
-    "version": "1.0.0.1",
->>>>>>> parent of 3d9f561... Edit apiapp.json
-=======
-    "version": "1.0.0.1",
->>>>>>> parent of 3d9f561... Edit apiapp.json
-=======
-    "version": "1.0.0.1",
->>>>>>> parent of 3d9f561... Edit apiapp.json
+    "version": "1.0.2",
     "title": "Azure ML Connector",
     "summary": "The Azure ML Connector for Logic Apps enables calling Azure ML APIs for batch scoring (Batch Execution Service) and retraining",
     "description": "The Azure ML Connector for Logic Apps enables calling Azure ML APIs for batch scoring (Batch Execution Service) and retraining. You can run batch scoring and retraining jobs to be executed on demand or on a recurring schedule. The combination of the two actions can automatically, score your data, and retrain, evaluate, and update your web service’s model without a need to write any code.",
@@ -27,21 +11,7 @@
     "iconUrl": "http://bammobi.com/MLIcon.png",
     "releaseNotes": "Create Package",
     "licenseUrl": "https://www.microsoft.com/en-us/licensing/default.aspx",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     "projectUrl": "http://apiapps-preview.nuget.org/packages/AzureMLLogicAppConnector",
-=======
-=======
->>>>>>> parent of 3d9f561... Edit apiapp.json
-=======
->>>>>>> parent of 3d9f561... Edit apiapp.json
-=======
->>>>>>> parent of 3d9f561... Edit apiapp.json
-    "projectUrl": "http://apiapps-preview.nuget.org/packages/AzureML.LogicApp.Connector",
-    "requireLicenseAcceptance": "false",
->>>>>>> parent of 3d9f561... Edit apiapp.json
     "tags": "AzureML BES Retraining LogicApps",
     "copyright":  "Copyright 2015",
     "endpoints": {
