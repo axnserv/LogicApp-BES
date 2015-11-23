@@ -5,7 +5,11 @@
     "gateway": "2015-01-14",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "version": "1.0.1",
+=======
+    "version": "1.0.0.1",
+>>>>>>> parent of 3d9f561... Edit apiapp.json
 =======
     "version": "1.0.0.1",
 >>>>>>> parent of 3d9f561... Edit apiapp.json
@@ -21,8 +25,11 @@
     "licenseUrl": "https://www.microsoft.com/en-us/licensing/default.aspx",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "projectUrl": "http://apiapps-preview.nuget.org/packages/AzureMLLogicAppConnector",
 =======
+=======
+>>>>>>> parent of 3d9f561... Edit apiapp.json
 =======
 >>>>>>> parent of 3d9f561... Edit apiapp.json
     "projectUrl": "http://apiapps-preview.nuget.org/packages/AzureML.LogicApp.Connector",
