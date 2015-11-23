@@ -3,7 +3,7 @@
     "id": "AzureMLLogicAppConnector",
     "namespace": "microsoft.com",
     "gateway": "2015-01-14",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "title": "Azure ML Connector",
     "summary": "The Azure ML Connector for Logic Apps enables calling Azure ML APIs for batch scoring (Batch Execution Service) and retraining",
     "description": "The Azure ML Connector for Logic Apps enables calling Azure ML APIs for batch scoring (Batch Execution Service) and retraining. You can run batch scoring and retraining jobs to be executed on demand or on a recurring schedule. The combination of the two actions can automatically, score your data, and retrain, evaluate, and update your web service’s model without a need to write any code.",
@@ -12,7 +12,7 @@
     "releaseNotes": "Create Package",
     "licenseUrl": "https://www.microsoft.com/en-us/licensing/default.aspx",
     "projectUrl": "http://apiapps-preview.nuget.org/packages/AzureMLLogicAppConnector",
-    "tags": "AzureML BES Retraining LogicApps",
+    "tags": ["AzureML", "BES", "Retraining", "LogicApps"],
     "copyright":  "Copyright 2015",
     "endpoints": {
         "apiDefinition": "/swagger/docs/v1",

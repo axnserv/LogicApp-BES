@@ -10,7 +10,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="apiapp.json">
-      <publishTime>11/23/2015 12:39:51</publishTime>
+      <publishTime>11/23/2015 15:15:21</publishTime>
     </File>
     <File Include="bin/AzureMLConnector.dll">
       <publishTime>11/23/2015 12:43:05</publishTime>
